@@ -63,3 +63,12 @@ export const getConfig = () => ({
         }
     ]
 });
+
+const config = {
+    production: {
+        // 生產環境配置
+        apiUrl: process.env.NEXT_PUBLIC_API_URL || 'your_production_api_url',
+        // 其他生產環境變數...
+    },
+    // ... existing code ...
+}
