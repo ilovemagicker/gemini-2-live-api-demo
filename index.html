@@ -5,32 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gemini Live</title>
     <link rel="stylesheet" href="css/styles.css">
+    <!-- 環境變數設定 -->
     <script>
-        // 初始化環境變數
         window.process = {
             env: {
                 NODE_ENV: 'production'
             }
         };
-        
+
         // 從 meta 標籤讀取環境變數
         function loadEnvVars() {
-            const envVars = document.querySelectorAll('meta[name^="env-"]');
-            envVars.forEach(meta => {
-                const key = meta.getAttribute('name').replace('env-', '');
-                window.process.env[key] = meta.getAttribute('content');
-            });
+            try {
+                const envVars = document.querySelectorAll('meta[name^="env-"]');
+                envVars.forEach(meta => {
+                    const key = meta.getAttribute('name').replace('env-', '');
+                    const value = meta.getAttribute('content');
+                    if (value && value !== '__' + key + '__') {
+                        window.process.env[key] = value;
+                    }
+                });
+                console.log('Environment variables loaded successfully');
+            } catch (error) {
+                console.error('Error loading environment variables:', error);
+            }
         }
-        
-        // 當 DOM 載入完成後載入環境變數
+
+        // DOM 載入完成後載入環境變數
         document.addEventListener('DOMContentLoaded', loadEnvVars);
     </script>
-    <!-- 添加環境變數 meta 標籤 -->
-    <meta name="env-NEXT_PUBLIC_GEMINI_API_KEY" content="__NEXT_PUBLIC_GEMINI_API_KEY__" />
-    <meta name="env-NEXT_PUBLIC_DEEPGRAM_API_KEY" content="__NEXT_PUBLIC_DEEPGRAM_API_KEY__" />
-    <meta name="env-NEXT_PUBLIC_TEMPERATURE" content="__NEXT_PUBLIC_TEMPERATURE__" />
-    <meta name="env-NEXT_PUBLIC_TOP_P" content="__NEXT_PUBLIC_TOP_P__" />
-    <meta name="env-NEXT_PUBLIC_TOP_K" content="__NEXT_PUBLIC_TOP_K__" />
+
+    <!-- 環境變數 meta 標籤 -->
+    <meta name="env-NEXT_PUBLIC_GEMINI_API_KEY" content="__NEXT_PUBLIC_GEMINI_API_KEY__">
+    <meta name="env-NEXT_PUBLIC_DEEPGRAM_API_KEY" content="__NEXT_PUBLIC_DEEPGRAM_API_KEY__">
+    <meta name="env-NEXT_PUBLIC_TEMPERATURE" content="__NEXT_PUBLIC_TEMPERATURE__">
+    <meta name="env-NEXT_PUBLIC_TOP_P" content="__NEXT_PUBLIC_TOP_P__">
+    <meta name="env-NEXT_PUBLIC_TOP_K" content="__NEXT_PUBLIC_TOP_K__">
 </head>
 <body>
     <div class="app-container">
