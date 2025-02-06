@@ -6,10 +6,17 @@
     <title>Gemini Live</title>
     <link rel="stylesheet" href="css/styles.css">
     <script>
-        // 檢查是否在 Vercel 環境中
-        if (typeof process === 'undefined') {
-            window.process = { env: {} };
-        }
+        // 初始化環境變數
+        window.process = {
+            env: {
+                NEXT_PUBLIC_GEMINI_API_KEY: '{{NEXT_PUBLIC_GEMINI_API_KEY}}',
+                NEXT_PUBLIC_DEEPGRAM_API_KEY: '{{NEXT_PUBLIC_DEEPGRAM_API_KEY}}',
+                NEXT_PUBLIC_TEMPERATURE: '{{NEXT_PUBLIC_TEMPERATURE}}',
+                NEXT_PUBLIC_TOP_P: '{{NEXT_PUBLIC_TOP_P}}',
+                NEXT_PUBLIC_TOP_K: '{{NEXT_PUBLIC_TOP_K}}',
+                NODE_ENV: 'production'
+            }
+        };
     </script>
 </head>
 <body>
