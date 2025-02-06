@@ -69,25 +69,4 @@ export const getConfig = () => ({
             "threshold": thresholds[localStorage.getItem('civicIntegrityThreshold')] || "HARM_BLOCK_THRESHOLD_UNSPECIFIED"
         }
     ]
-<<<<<<< HEAD
 });
-
-export const config = {
-    production: {
-        apiUrl: process.env.NEXT_PUBLIC_API_URL,
-        websocketUrl: process.env.NEXT_PUBLIC_WEBSOCKET_URL,
-        deepgramApiKey: process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY,
-    },
-    development: {
-        apiUrl: 'http://localhost:3000',
-        websocketUrl: 'ws://localhost:3000',
-        deepgramApiKey: '',
-    }
-};
-
-export const getCurrentConfig = () => {
-    return process.env.NODE_ENV === 'production' ? config.production : config.development;
-};
-=======
-});
->>>>>>> parent of 78d6299 (k)
