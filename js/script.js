@@ -9,6 +9,14 @@ import { setupEventListeners } from './dom/events.js';
 
 const initializeApp = async () => {
     try {
+        // 檢查環境變數是否正確載入
+        if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
+            throw new Error('Gemini API key not found in environment variables');
+        }
+        if (!process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY) {
+            throw new Error('Deepgram API key not found in environment variables');
+        }
+
         const url = getWebsocketUrl();
         const config = getConfig();
         const deepgramApiKey = getDeepgramApiKey();
@@ -52,7 +60,7 @@ const initializeApp = async () => {
 
     } catch (error) {
         console.error('Initialization error:', error);
-        alert('初始化失敗，請檢查 API 金鑰設定是否正確。');
+        alert('初始化失敗：' + error.message);
     }
 };
 

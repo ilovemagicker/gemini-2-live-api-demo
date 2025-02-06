@@ -9,15 +9,28 @@
         // 初始化環境變數
         window.process = {
             env: {
-                NEXT_PUBLIC_GEMINI_API_KEY: '{{NEXT_PUBLIC_GEMINI_API_KEY}}',
-                NEXT_PUBLIC_DEEPGRAM_API_KEY: '{{NEXT_PUBLIC_DEEPGRAM_API_KEY}}',
-                NEXT_PUBLIC_TEMPERATURE: '{{NEXT_PUBLIC_TEMPERATURE}}',
-                NEXT_PUBLIC_TOP_P: '{{NEXT_PUBLIC_TOP_P}}',
-                NEXT_PUBLIC_TOP_K: '{{NEXT_PUBLIC_TOP_K}}',
                 NODE_ENV: 'production'
             }
         };
+        
+        // 從 meta 標籤讀取環境變數
+        function loadEnvVars() {
+            const envVars = document.querySelectorAll('meta[name^="env-"]');
+            envVars.forEach(meta => {
+                const key = meta.getAttribute('name').replace('env-', '');
+                window.process.env[key] = meta.getAttribute('content');
+            });
+        }
+        
+        // 當 DOM 載入完成後載入環境變數
+        document.addEventListener('DOMContentLoaded', loadEnvVars);
     </script>
+    <!-- 添加環境變數 meta 標籤 -->
+    <meta name="env-NEXT_PUBLIC_GEMINI_API_KEY" content="__NEXT_PUBLIC_GEMINI_API_KEY__" />
+    <meta name="env-NEXT_PUBLIC_DEEPGRAM_API_KEY" content="__NEXT_PUBLIC_DEEPGRAM_API_KEY__" />
+    <meta name="env-NEXT_PUBLIC_TEMPERATURE" content="__NEXT_PUBLIC_TEMPERATURE__" />
+    <meta name="env-NEXT_PUBLIC_TOP_P" content="__NEXT_PUBLIC_TOP_P__" />
+    <meta name="env-NEXT_PUBLIC_TOP_K" content="__NEXT_PUBLIC_TOP_K__" />
 </head>
 <body>
     <div class="app-container">
