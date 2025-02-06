@@ -69,6 +69,7 @@ export const getConfig = () => ({
             "threshold": thresholds[localStorage.getItem('civicIntegrityThreshold')] || "HARM_BLOCK_THRESHOLD_UNSPECIFIED"
         }
     ]
+<<<<<<< HEAD
 });
 
 export const config = {
@@ -87,3 +88,6 @@ export const config = {
 export const getCurrentConfig = () => {
     return process.env.NODE_ENV === 'production' ? config.production : config.development;
 };
+=======
+});
+>>>>>>> parent of 78d6299 (k)

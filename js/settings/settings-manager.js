@@ -61,15 +61,16 @@ class SettingsManager {
             saveBtn: this.dialog.querySelector('#settingsSaveBtn')
         };
 
-        // 如果有環境變數，優先使用環境變數的值
+        // 修改環境變數的處理方式
         if (process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
             this.elements.apiKeyInput.value = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-            this.elements.apiKeyInput.disabled = true; // 可選：禁用輸入框
+            // 移除 disabled 屬性，允許用戶修改
+            // this.elements.apiKeyInput.disabled = true;
         }
         
         if (process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY) {
             this.elements.deepgramApiKeyInput.value = process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY;
-            this.elements.deepgramApiKeyInput.disabled = true; // 可選：禁用輸入框
+            // this.elements.deepgramApiKeyInput.disabled = true;
         }
     }
 
@@ -117,9 +118,9 @@ class SettingsManager {
     }
 
     loadSettings() {
-        // Load values from localStorage
-        this.elements.apiKeyInput.value = localStorage.getItem('apiKey') || '';
-        this.elements.deepgramApiKeyInput.value = localStorage.getItem('deepgramApiKey') || '';
+        // 修改載入邏輯，優先使用 localStorage 的值
+        this.elements.apiKeyInput.value = localStorage.getItem('apiKey') || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+        this.elements.deepgramApiKeyInput.value = localStorage.getItem('deepgramApiKey') || process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || '';
         this.elements.voiceSelect.value = localStorage.getItem('voiceName') || 'Aoede';
         this.elements.sampleRateInput.value = localStorage.getItem('sampleRate') || '27000';
         this.elements.systemInstructionsInput.value = localStorage.getItem('systemInstructions') || 'You are a helpful assistant';
@@ -142,13 +143,9 @@ class SettingsManager {
     }
 
     saveSettings() {
-        // 只有當環境變數不存在時才保存到 localStorage
-        if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
-            localStorage.setItem('apiKey', this.elements.apiKeyInput.value);
-        }
-        if (!process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY) {
-            localStorage.setItem('deepgramApiKey', this.elements.deepgramApiKeyInput.value);
-        }
+        // 總是保存用戶輸入的值到 localStorage
+        localStorage.setItem('apiKey', this.elements.apiKeyInput.value);
+        localStorage.setItem('deepgramApiKey', this.elements.deepgramApiKeyInput.value);
         
         // 其他設定照常保存
         localStorage.setItem('voiceName', this.elements.voiceSelect.value);
