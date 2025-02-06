@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gemini Live</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // 檢查是否在 Vercel 環境中
+        if (typeof process === 'undefined') {
+            window.process = { env: {} };
+        }
+    </script>
 </head>
 <body>
     <div class="app-container">

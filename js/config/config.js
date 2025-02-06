@@ -1,10 +1,17 @@
 export const getWebsocketUrl = () => {
     const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || localStorage.getItem('apiKey');
+    if (!apiKey) {
+        throw new Error('API key not found');
+    }
     return `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${apiKey}`;
 };
 
 export const getDeepgramApiKey = () => {
-    return process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || localStorage.getItem('deepgramApiKey') || '';
+    const apiKey = process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || localStorage.getItem('deepgramApiKey');
+    if (!apiKey) {
+        throw new Error('Deepgram API key not found');
+    }
+    return apiKey;
 };
 
 // Audio Configurations

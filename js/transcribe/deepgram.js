@@ -116,3 +116,12 @@ export class DeepgramTranscriber {
         }
     }
 }
+
+const initializeDeepgram = () => {
+    const apiKey = process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || localStorage.getItem('deepgramApiKey');
+    if (!apiKey) {
+        console.error('Deepgram API key not found');
+        return null;
+    }
+    // ... rest of initialization code ...
+};

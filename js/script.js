@@ -48,3 +48,21 @@ geminiAgent.on('turn_complete', () => {
 geminiAgent.connect();
 
 setupEventListeners(geminiAgent);
+
+window.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // 確保環境變數存在
+        if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY && !localStorage.getItem('apiKey')) {
+            console.warn('API key not found in environment variables or localStorage');
+        }
+        
+        if (!process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY && !localStorage.getItem('deepgramApiKey')) {
+            console.warn('Deepgram API key not found in environment variables or localStorage');
+        }
+
+        // 初始化其他組件
+        // ... existing initialization code ...
+    } catch (error) {
+        console.error('Initialization error:', error);
+    }
+});

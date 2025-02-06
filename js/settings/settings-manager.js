@@ -142,8 +142,15 @@ class SettingsManager {
     }
 
     saveSettings() {
-        localStorage.setItem('apiKey', this.elements.apiKeyInput.value);
-        localStorage.setItem('deepgramApiKey', this.elements.deepgramApiKeyInput.value);
+        // 只有當環境變數不存在時才保存到 localStorage
+        if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
+            localStorage.setItem('apiKey', this.elements.apiKeyInput.value);
+        }
+        if (!process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY) {
+            localStorage.setItem('deepgramApiKey', this.elements.deepgramApiKeyInput.value);
+        }
+        
+        // 其他設定照常保存
         localStorage.setItem('voiceName', this.elements.voiceSelect.value);
         localStorage.setItem('sampleRate', this.elements.sampleRateInput.value);
         localStorage.setItem('systemInstructions', this.elements.systemInstructionsInput.value);
