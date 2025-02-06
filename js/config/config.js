@@ -1,10 +1,10 @@
 export const getWebsocketUrl = () => {
-    const apiKey = localStorage.getItem('apiKey');
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || localStorage.getItem('apiKey');
     return `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${apiKey}`;
 };
 
 export const getDeepgramApiKey = () => {
-    return localStorage.getItem('deepgramApiKey') || '';
+    return process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || localStorage.getItem('deepgramApiKey') || '';
 };
 
 // Audio Configurations
@@ -20,9 +20,9 @@ const thresholds = {
 export const getConfig = () => ({
     model: 'models/gemini-2.0-flash-exp',
     generationConfig: {
-        temperature: parseFloat(localStorage.getItem('temperature')) || 1.8,
-        top_p: parseFloat(localStorage.getItem('top_p')) || 0.95,
-        top_k: parseInt(localStorage.getItem('top_k')) || 65,
+        temperature: parseFloat(process.env.NEXT_PUBLIC_TEMPERATURE || localStorage.getItem('temperature')) || 1.8,
+        top_p: parseFloat(process.env.NEXT_PUBLIC_TOP_P || localStorage.getItem('top_p')) || 0.95,
+        top_k: parseInt(process.env.NEXT_PUBLIC_TOP_K || localStorage.getItem('top_k')) || 65,
         responseModalities: "audio",
         speechConfig: {
             voiceConfig: { 
@@ -64,11 +64,19 @@ export const getConfig = () => ({
     ]
 });
 
-const config = {
+export const config = {
     production: {
-        // 生產環境配置
-        apiUrl: process.env.NEXT_PUBLIC_API_URL || 'your_production_api_url',
-        // 其他生產環境變數...
+        apiUrl: process.env.NEXT_PUBLIC_API_URL,
+        websocketUrl: process.env.NEXT_PUBLIC_WEBSOCKET_URL,
+        deepgramApiKey: process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY,
     },
-    // ... existing code ...
-}
+    development: {
+        apiUrl: 'http://localhost:3000',
+        websocketUrl: 'ws://localhost:3000',
+        deepgramApiKey: '',
+    }
+};
+
+export const getCurrentConfig = () => {
+    return process.env.NODE_ENV === 'production' ? config.production : config.development;
+};

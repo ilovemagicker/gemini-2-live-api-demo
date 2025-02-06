@@ -60,6 +60,17 @@ class SettingsManager {
             civicValue: this.dialog.querySelector('#civicValue'),
             saveBtn: this.dialog.querySelector('#settingsSaveBtn')
         };
+
+        // 如果有環境變數，優先使用環境變數的值
+        if (process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
+            this.elements.apiKeyInput.value = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+            this.elements.apiKeyInput.disabled = true; // 可選：禁用輸入框
+        }
+        
+        if (process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY) {
+            this.elements.deepgramApiKeyInput.value = process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY;
+            this.elements.deepgramApiKeyInput.disabled = true; // 可選：禁用輸入框
+        }
     }
 
     setupEventListeners() {
