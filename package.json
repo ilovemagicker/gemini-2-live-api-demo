@@ -1,6 +1,17 @@
 {
+  "name": "gemini-live",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
+    "dev": "serve .",
     "build": "node build.js",
-    "vercel-build": "node build.js"
+    "vercel-build": "node build.js",
+    "start": "serve ."
+  },
+  "dependencies": {
+    "serve": "^14.0.0"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.0.0"
   }
 } 
